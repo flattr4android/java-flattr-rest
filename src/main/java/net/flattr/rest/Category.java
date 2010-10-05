@@ -25,6 +25,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Represent a single category.See <a
+ * href="http://developers.flattr.net/doku.php/general_info_methods">Flattr API
+ * documentation</a>.
+ */
 public class Category {
 
 	protected String id;
@@ -37,7 +42,7 @@ public class Category {
 	public String getName() {
 		return name;
 	}
-	
+
 	public String toString() {
 		return getName() + " (" + getId() + ")";
 	}
@@ -62,7 +67,7 @@ public class Category {
 
 class CategorySAXHandler extends DefaultHandler {
 	private StringBuilder currentValue = new StringBuilder();
-	
+
 	private ArrayList<Category> categoryList;
 	private Category currentCategory = null;
 
@@ -74,7 +79,7 @@ class CategorySAXHandler extends DefaultHandler {
 	public void startElement(String nsURI, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		currentValue = new StringBuilder();
-		
+
 		if (qName.equals("category")) {
 			currentCategory = new Category();
 		}
@@ -84,11 +89,10 @@ class CategorySAXHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String tagName)
 			throws SAXException {
 		String value = currentValue.toString().trim();
-		
+
 		if ((tagName.equals("category")) && (currentCategory != null)) {
 			categoryList.add(currentCategory);
-		}
-		else if (tagName.equals("id")) {
+		} else if (tagName.equals("id")) {
 			currentCategory.id = value;
 		} else if (tagName.equals("name")) {
 			currentCategory.name = value;

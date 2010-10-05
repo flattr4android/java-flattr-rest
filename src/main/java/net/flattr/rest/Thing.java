@@ -32,6 +32,11 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
+/**
+ * Represent a thing. See <a
+ * href="http://developers.flattr.net/doku.php/thing_methods">Flattr API
+ * documentation</a>.
+ */
 public class Thing {
 
 	public static final String STATUS_OK = "ok";

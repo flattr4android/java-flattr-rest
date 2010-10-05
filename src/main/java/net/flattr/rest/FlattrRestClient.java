@@ -31,6 +31,9 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+/**
+ * <code>FlattrRestClient</code> is the main entry point to the API.
+ */
 public class FlattrRestClient {
 
 	public static final String REQUEST_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/request_token";
@@ -49,6 +52,9 @@ public class FlattrRestClient {
 		consumer.setTokenWithSecret(accessToken, tokenSecret);
 	}
 
+	/**
+	 * Return the user representing the authenticated user.
+	 */
 	public User getMe() throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
@@ -57,6 +63,9 @@ public class FlattrRestClient {
 				getResourceInputStream("/rest/0.0.1/user/me"));
 	}
 
+	/**
+	 * Return a user by his ID.
+	 */
 	public User getUser(int id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
@@ -65,6 +74,9 @@ public class FlattrRestClient {
 				getResourceInputStream("/rest/0.0.1/user/get/id/" + id));
 	}
 
+	/**
+	 * Return a thing by its ID.
+	 */
 	public Thing getThing(String id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrRestException, IOException {
@@ -72,6 +84,9 @@ public class FlattrRestClient {
 				getResourceInputStream("/rest/0.0.1/thing/get/id/" + id));
 	}
 
+	/**
+	 * Get the things of a user.
+	 */
 	public ArrayList<Thing> getUserThings(int userId)
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
@@ -81,6 +96,9 @@ public class FlattrRestClient {
 						+ userId));
 	}
 
+	/**
+	 * Click a thing by its ID.
+	 */
 	public void clickThing(String id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
@@ -88,6 +106,9 @@ public class FlattrRestClient {
 		sendRequest("/rest/0.0.1/thing/click/id/" + id);
 	}
 
+	/**
+	 * Register a new thing.
+	 */
 	public void register(Thing thing) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, IOException {
@@ -105,6 +126,9 @@ public class FlattrRestClient {
 		sendRequest("/rest/0.0.1/thing/register", "POST", content);
 	}
 
+	/**
+	 * Return the supported languages.
+	 */
 	public ArrayList<Language> getLanguages()
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
@@ -113,6 +137,9 @@ public class FlattrRestClient {
 				.buildLanguages(getResourceInputStream("/rest/0.0.1/feed/languages"));
 	}
 
+	/**
+	 * Return the existing thing categories.
+	 */
 	public ArrayList<Category> getCategories()
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,

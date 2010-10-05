@@ -25,6 +25,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Represent a single language. See <a
+ * href="http://developers.flattr.net/doku.php/general_info_methods">Flattr API
+ * documentation</a>.
+ */
 public class Language {
 
 	protected String id;
@@ -74,7 +79,7 @@ class LanguageSAXHandler extends DefaultHandler {
 	public void startElement(String nsURI, String localName, String tagName,
 			Attributes attributes) throws SAXException {
 		currentValue = new StringBuilder();
-		
+
 		if (tagName.equals("language")) {
 			currentLanguage = new Language();
 		}

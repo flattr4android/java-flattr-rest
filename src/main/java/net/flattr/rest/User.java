@@ -30,6 +30,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Represent a user. See <a
+ * href="http://developers.flattr.net/doku.php/user_methods"> Flattr API
+ * documentation</a>.
+ */
 public class User {
 	protected int id;
 	protected String userName;
@@ -131,7 +136,7 @@ class UserSAXHandler extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		currentValue = new StringBuilder();
 	}
-	
+
 	@Override
 	public void characters(char[] ch, int start, int length) {
 		currentValue.append(ch, start, length);
@@ -141,7 +146,7 @@ class UserSAXHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String tagName)
 			throws SAXException {
 		String value = currentValue.toString().trim();
-		
+
 		if (tagName.equalsIgnoreCase("id")) {
 			user.id = Integer.parseInt(value);
 		} else if (tagName.equalsIgnoreCase("username")) {
