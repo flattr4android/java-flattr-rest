@@ -28,13 +28,7 @@ public class FlattrRestExample {
 
 	public static void main(String[] args) {
 		try {
-			// CAUTION!! This example will *not* work with the original
-			// signpost library, see
-			// http://forum.flattr.net/showthread.php?tid=486
-
-			// Remplace these two values with the application credentials
-			OAuthConsumer consumer = new DefaultOAuthConsumer(
-					"<consumer key>",
+			OAuthConsumer consumer = new DefaultOAuthConsumer("<consumer key>",
 					"<consumer secret>");
 
 			OAuthProvider provider = new DefaultOAuthProvider(
@@ -43,12 +37,9 @@ public class FlattrRestExample {
 					FlattrRestClient.AUTHORIZATION_WEBSITE_URL);
 			System.out.println("Fetching request token from Flattr...");
 
-			// No callback here, pass OUT_OF_BAND
-			// In fact Flattr does not accept this parameter and signpost
-			// has to be modified for this method to work. See
-			// http://forum.flattr.net/showthread.php?tid=486
-			String authUrl = provider.retrieveRequestToken(consumer,
-					OAuth.OUT_OF_BAND);
+			// No callback here, pass an empty string.
+			// See http://forum.flattr.net/showthread.php?tid=486
+			String authUrl = provider.retrieveRequestToken(consumer, "");
 
 			System.out.println("Request token: " + consumer.getToken());
 			System.out.println("Token secret: " + consumer.getTokenSecret());
@@ -65,8 +56,8 @@ public class FlattrRestExample {
 
 			System.out.println("Fetching access token from Flattr...");
 
-			// Enable v1.0a to have the verifier/PIN sent, see
-			// http://forum.flattr.net/showthread.php?tid=486
+			// Enable v1.0a to have the verifier/PIN sent
+			// See http://forum.flattr.net/showthread.php?tid=486
 			provider.setOAuth10a(true);
 			provider.retrieveAccessToken(consumer, pin);
 
