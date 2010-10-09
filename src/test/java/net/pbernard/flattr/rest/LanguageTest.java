@@ -12,10 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.flattr.rest;
+package net.pbernard.flattr.rest;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+
+import net.pbernard.flattr.rest.FlattrRestException;
+import net.pbernard.flattr.rest.Language;
 
 public class LanguageTest extends FlattrRestTestCase {
 

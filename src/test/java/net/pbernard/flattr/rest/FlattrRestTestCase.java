@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.flattr.rest;
+package net.pbernard.flattr.rest;
 
 import junit.framework.TestCase;
 

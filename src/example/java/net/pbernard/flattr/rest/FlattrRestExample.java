@@ -12,11 +12,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.flattr.rest;
+package net.pbernard.flattr.rest;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import net.pbernard.flattr.rest.Category;
+import net.pbernard.flattr.rest.FlattrRestClient;
+import net.pbernard.flattr.rest.Language;
+import net.pbernard.flattr.rest.Thing;
+import net.pbernard.flattr.rest.User;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
