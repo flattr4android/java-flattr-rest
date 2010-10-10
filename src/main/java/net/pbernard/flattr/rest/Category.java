@@ -23,7 +23,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Represent a single category.See <a
@@ -65,7 +64,7 @@ public class Category {
 
 }
 
-class CategorySAXHandler extends DefaultHandler {
+class CategorySAXHandler extends PortableSAXHandler {
 	private StringBuilder currentValue = new StringBuilder();
 
 	private ArrayList<Category> categoryList;
@@ -86,8 +85,10 @@ class CategorySAXHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void endElement(String uri, String localName, String tagName)
+	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		String tagName = getTagName(localName, qName);
+		
 		String value = currentValue.toString().trim();
 
 		if ((tagName.equals("category")) && (currentCategory != null)) {

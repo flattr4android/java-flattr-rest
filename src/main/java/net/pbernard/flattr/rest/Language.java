@@ -23,7 +23,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Represent a single language. See <a
@@ -65,7 +64,7 @@ public class Language {
 
 }
 
-class LanguageSAXHandler extends DefaultHandler {
+class LanguageSAXHandler extends PortableSAXHandler {
 	private StringBuilder currentValue = new StringBuilder();
 
 	private ArrayList<Language> languageList;
@@ -86,8 +85,10 @@ class LanguageSAXHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void endElement(String uri, String localName, String tagName)
+	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		String tagName = getTagName(localName, qName);
+		
 		String value = currentValue.toString().trim();
 
 		if ((tagName.equals("language")) && (currentLanguage != null)) {

@@ -20,17 +20,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.Attributes;
 
 /**
  * Represent a thing. See <a
@@ -185,7 +184,7 @@ public class Thing {
 
 }
 
-class ThingSAXHandler extends DefaultHandler {
+class ThingSAXHandler extends PortableSAXHandler {
 	private boolean inUser = false;
 	private boolean inCategory = false;
 	private StringBuilder currentValue = new StringBuilder();
@@ -202,20 +201,24 @@ class ThingSAXHandler extends DefaultHandler {
 	@Override
 	public void startElement(String nsURI, String localName, String qName,
 			Attributes attributes) throws SAXException {
+		String tagName = getTagName(localName, qName);
+		
 		currentValue = new StringBuilder();
 
-		if (qName.equals("thing")) {
+		if (tagName.equals("thing")) {
 			currentThing = new Thing(fr);
-		} else if (qName.equals("user")) {
+		} else if (tagName.equals("user")) {
 			inUser = true;
-		} else if (qName.equals("category")) {
+		} else if (tagName.equals("category")) {
 			inCategory = true;
 		}
 	}
 
 	@Override
-	public void endElement(String uri, String localName, String tagName)
+	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		String tagName = getTagName(localName, qName);
+		
 		String value = currentValue.toString().trim();
 
 		if (tagName.equals("user")) {

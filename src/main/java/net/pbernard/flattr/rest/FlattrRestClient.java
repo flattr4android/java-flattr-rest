@@ -23,13 +23,13 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.SAXException;
-
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
+
+import org.xml.sax.SAXException;
 
 /**
  * <code>FlattrRestClient</code> is the main entry point to the API.

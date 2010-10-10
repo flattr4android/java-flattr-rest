@@ -28,7 +28,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Represent a user. See <a
@@ -123,7 +122,7 @@ public class User {
 }
 
 // using SAX
-class UserSAXHandler extends DefaultHandler {
+class UserSAXHandler extends PortableSAXHandler {
 	private User user;
 	private StringBuilder currentValue = new StringBuilder();
 
@@ -143,8 +142,10 @@ class UserSAXHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void endElement(String uri, String localName, String tagName)
+	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		String tagName = getTagName(localName, qName);
+		
 		String value = currentValue.toString().trim();
 
 		if (tagName.equalsIgnoreCase("id")) {
