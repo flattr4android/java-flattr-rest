@@ -26,20 +26,14 @@ import net.pbernard.flattr.rest.User;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
-import oauth.signpost.basic.DefaultOAuthConsumer;
-import oauth.signpost.basic.DefaultOAuthProvider;
 
 public class FlattrRestExample {
 
 	public static void main(String[] args) {
 		try {
-			OAuthConsumer consumer = new DefaultOAuthConsumer("<consumer key>",
+			OAuthConsumer consumer = new FlattrOAuthConsumer("<consumer key>",
 					"<consumer secret>");
-
-			OAuthProvider provider = new DefaultOAuthProvider(
-					FlattrRestClient.REQUEST_TOKEN_ENDPOINT_URL,
-					FlattrRestClient.ACCESS_TOKEN_ENDPOINT_URL,
-					FlattrRestClient.AUTHORIZATION_WEBSITE_URL);
+			OAuthProvider provider = new FlattrOAuthProvider();
 			System.out.println("Fetching request token from Flattr...");
 
 			// No callback here, pass an empty string.
@@ -60,10 +54,6 @@ public class FlattrRestExample {
 			String pin = br.readLine();
 
 			System.out.println("Fetching access token from Flattr...");
-
-			// Enable v1.0a to have the verifier/PIN sent
-			// See http://forum.flattr.net/showthread.php?tid=486
-			provider.setOAuth10a(true);
 			provider.retrieveAccessToken(consumer, pin);
 
 			System.out.println("Access token: " + consumer.getToken());
