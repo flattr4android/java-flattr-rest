@@ -36,10 +36,6 @@ import org.xml.sax.SAXException;
  */
 public class FlattrRestClient {
 
-	public static final String REQUEST_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/request_token";
-	public static final String ACCESS_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/access_token";
-	public static final String AUTHORIZATION_WEBSITE_URL = "http://api.flattr.com/oauth/authenticate";
-
 	private OAuthConsumer consumer;
 
 	public FlattrRestClient(OAuthConsumer consumer) {

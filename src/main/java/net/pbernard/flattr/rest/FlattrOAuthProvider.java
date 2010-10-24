@@ -12,10 +12,13 @@ import oauth.signpost.http.HttpRequest;
 @SuppressWarnings("serial")
 public class FlattrOAuthProvider extends DefaultOAuthProvider {
 
+	public static final String REQUEST_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/request_token";
+	public static final String ACCESS_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/access_token";
+	public static final String AUTHORIZATION_WEBSITE_URL = "http://api.flattr.com/oauth/authenticate";
+
 	public FlattrOAuthProvider() {
-		super(FlattrRestClient.REQUEST_TOKEN_ENDPOINT_URL,
-				FlattrRestClient.ACCESS_TOKEN_ENDPOINT_URL,
-				FlattrRestClient.AUTHORIZATION_WEBSITE_URL);
+		super(REQUEST_TOKEN_ENDPOINT_URL, ACCESS_TOKEN_ENDPOINT_URL,
+				AUTHORIZATION_WEBSITE_URL);
 		// Enable v1.0a to have the verifier/PIN sent
 		// See http://forum.flattr.net/showthread.php?tid=486
 		setOAuth10a(true);
