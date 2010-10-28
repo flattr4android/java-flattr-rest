@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -43,19 +44,20 @@ public class Thing {
 	public static final String STATUS_INACTIVE = "inactive";
 	public static final String STATUS_CLICKED = "clicked";
 
-	String id;
-	Date created;
-	String language;
-	String url;
-	String title;
-	String story;
-	int clicks;
-	int userId;
-	String userName;
-	ArrayList<String> tags = new ArrayList<String>();
-	String categoryId;
-	String categoryName;
-	String status;
+	protected String id;
+	protected Date created;
+	protected String language;
+	protected String url;
+	protected String title;
+	protected String description;
+	protected int clicks;
+	protected int userId;
+	protected String userName;
+	protected List<String> tags = new ArrayList<String>();
+	protected String categoryId;
+	protected String categoryName;
+	protected String status;
+	protected User user;
 
 	FlattrRestClient fr;
 
@@ -67,30 +69,6 @@ public class Thing {
 	 * Build a thing for registration purpose.
 	 */
 	public Thing() {
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setCategory(String category) {
-		this.categoryName = category;
-	}
-
-	public void setDescription(String description) {
-		this.story = description;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public void addTag(String tag) {
-		this.tags.add(tag);
 	}
 
 	public String getId() {
@@ -105,16 +83,32 @@ public class Thing {
 		return language;
 	}
 
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	public String getURL() {
 		return url;
+	}
+
+	public void setURL(String url) {
+		this.url = url;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public String getStory() {
-		return story;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getClicks() {
@@ -129,8 +123,22 @@ public class Thing {
 		return userName;
 	}
 
-	public ArrayList<String> getTags() {
+	public User getUser() throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			ParserConfigurationException, SAXException, IOException,
+			FlattrRestException {
+		if (user == null) {
+			user = fr.getUser(getUserId());
+		}
+		return user;
+	}
+
+	public List<String> getTags() {
 		return tags;
+	}
+
+	public void addTag(String tag) {
+		this.tags.add(tag);
 	}
 
 	public String getCategoryId() {
@@ -141,7 +149,15 @@ public class Thing {
 		return categoryName;
 	}
 
+	public void setCategoryName(String category) {
+		this.categoryName = category;
+	}
+
 	public String getStatus() {
+		if (fr.isDemoMode()) {
+			// In demo mode, always pretend that the thing is clickable
+			return Thing.STATUS_OK;
+		}
 		return status;
 	}
 
@@ -202,7 +218,7 @@ class ThingSAXHandler extends PortableSAXHandler {
 	public void startElement(String nsURI, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		String tagName = getTagName(localName, qName);
-		
+
 		currentValue = new StringBuilder();
 
 		if (tagName.equals("thing")) {
@@ -218,7 +234,7 @@ class ThingSAXHandler extends PortableSAXHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		String tagName = getTagName(localName, qName);
-		
+
 		String value = currentValue.toString().trim();
 
 		if (tagName.equals("user")) {
@@ -255,7 +271,7 @@ class ThingSAXHandler extends PortableSAXHandler {
 				} else if (tagName.equals("title")) {
 					currentThing.title = value;
 				} else if (tagName.equals("story")) {
-					currentThing.story = value;
+					currentThing.description = value;
 				} else if (tagName.equals("clicks")) {
 					currentThing.clicks = Integer.parseInt(value);
 				} else if (tagName.equals("username")) {

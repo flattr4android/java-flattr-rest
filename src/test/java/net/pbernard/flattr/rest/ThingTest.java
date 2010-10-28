@@ -46,7 +46,7 @@ public class ThingTest extends FlattrRestTestCase {
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
-		assertEquals("Kontakta Kontilint", t.getStory());
+		assertEquals("Kontakta Kontilint", t.getDescription());
 		assertEquals(0, t.getClicks());
 		assertEquals(244, t.getUserId());
 		assertEquals("Bomelin", t.getUserName());
@@ -121,7 +121,7 @@ public class ThingTest extends FlattrRestTestCase {
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
-		assertEquals("Kontakta Kontilint", t.getStory());
+		assertEquals("Kontakta Kontilint", t.getDescription());
 		assertEquals(0, t.getClicks());
 		assertEquals(244, t.getUserId());
 		assertEquals("Bomelin", t.getUserName());
@@ -140,7 +140,7 @@ public class ThingTest extends FlattrRestTestCase {
 		assertEquals("us_EN", t.getLanguage());
 		assertEquals("http://www.rotatepdf.net", t.getURL());
 		assertEquals("Rotate PDF for free", t.getTitle());
-		assertEquals("Rotate PDF online for free", t.getStory());
+		assertEquals("Rotate PDF online for free", t.getDescription());
 		assertEquals(3, t.getClicks());
 		assertEquals(12345, t.getUserId());
 		assertEquals("pbernard", t.getUserName());

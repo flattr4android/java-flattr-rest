@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.pbernard.flattr.rest.demo.SampleThing;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -36,7 +37,11 @@ import org.xml.sax.SAXException;
  */
 public class FlattrRestClient {
 
+	public static final String DEMO_SAMPLE_THING_ID = "demo_thing";
+
 	private OAuthConsumer consumer;
+	private boolean demoMode = false;
+	private Thing demoSampleThing;
 
 	public FlattrRestClient(OAuthConsumer consumer) {
 		this.consumer = consumer;
@@ -46,6 +51,29 @@ public class FlattrRestClient {
 			String accessToken, String tokenSecret) {
 		consumer = new DefaultOAuthConsumer(consumerKey, consumerSecret);
 		consumer.setTokenWithSecret(accessToken, tokenSecret);
+	}
+
+	/**
+	 * @see FlattrRestClient#setDemoMode(boolean)
+	 */
+	public boolean isDemoMode() {
+		return demoMode;
+	}
+
+	/**
+	 * Enable or disable the Demo mode.
+	 *
+	 * When enabled, the demo mode has a couple of side effects:
+	 * <ul>
+	 * <li>The things are always "clickable" and click is always successful but
+	 * does <i>nothing</i>. This is useful to demonstrate the flattring of a
+	 * thing without actually clicking it, and with the ability to click it
+	 * several times (to repeat the demo as much as needed).</li>
+	 * <li>The URL stored in the DEMO_SAMPLE_THING_URL variable</li>
+	 * </ul>
+	 */
+	public void setDemoMode(boolean demoMode) {
+		this.demoMode = demoMode;
 	}
 
 	/**
@@ -76,8 +104,18 @@ public class FlattrRestClient {
 	public Thing getThing(String id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrRestException, IOException {
+		if (isDemoMode() && id.equals(DEMO_SAMPLE_THING_ID)) {
+			if (demoSampleThing == null) {
+				demoSampleThing = new SampleThing();
+			}
+			return demoSampleThing;
+		}
 		return Thing.buildOneThing(this,
 				getResourceInputStream("/rest/0.0.1/thing/get/id/" + id));
+	}
+
+	public void setDemoSampleThing(Thing model) {
+		demoSampleThing = new SampleThing(model);
 	}
 
 	/**
@@ -99,7 +137,10 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
 			FlattrServerResponseException {
-		sendRequest("/rest/0.0.1/thing/click/id/" + id);
+		if (! isDemoMode()) {
+			sendRequest("/rest/0.0.1/thing/click/id/" + id);
+		}
+		// If demo mode is on, click always works
 	}
 
 	/**
@@ -111,7 +152,7 @@ public class FlattrRestClient {
 		String content = "<thing>" + "<url>" + thing.getURL() + "</url>"
 				+ "<title><![CDATA[" + thing.getTitle() + "]]></title>"
 				+ "<category>" + thing.getCategoryName() + "</category>"
-				+ "<description><![CDATA[" + thing.getStory()
+				+ "<description><![CDATA[" + thing.getDescription()
 				+ "]]></description>" + "<language>" + thing.getLanguage()
 				+ "</language>" + "<hidden>1</hidden>" + "<tags>";
 		for (String tag : thing.getTags()) {
