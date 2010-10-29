@@ -14,37 +14,20 @@
  */
 package net.pbernard.flattr.rest;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 import net.pbernard.flattr.rest.Category;
 import net.pbernard.flattr.rest.FlattrRestException;
 
 public class CategoryTest extends FlattrRestTestCase {
-	
+
 	public void testBuildCategories() throws FlattrRestException {
-		String content = 
-				"<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
-				"<flattr>" +
-				"  <version>0.0.1</version>" +
-				"  <categories>" +
-				"    <category>" +
-				"      <id>text</id>" +
-				"      <name>Written text</name>" +
-				"    </category>" +
-				"    <category>" +
-				"      <id>images</id>" +
-				"      <name>Images</name>" +
-				"    </category>" +
-				"  </categories>" +
-				"</flattr>";
-		ArrayList<Category> langs = Category
-				.buildCategories(new ByteArrayInputStream(content.getBytes()));
+		ArrayList<Category> langs = Category.buildCategories(getClass()
+				.getClassLoader().getResourceAsStream("one_category.xml"));
 		assertEquals(2, langs.size());
 		assertEquals("text", langs.get(0).getId());
 		assertEquals("Written text", langs.get(0).getName());
 		assertEquals("images", langs.get(1).getId());
 		assertEquals("Images", langs.get(1).getName());
 	}
-
 }
