@@ -154,7 +154,7 @@ public class Thing {
 	}
 
 	public String getStatus() {
-		if (fr.isDemoMode()) {
+		if ((fr != null) && (fr.isDemoMode())) {
 			// In demo mode, always pretend that the thing is clickable
 			return Thing.STATUS_OK;
 		}
