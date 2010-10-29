@@ -14,34 +14,14 @@
  */
 package net.pbernard.flattr.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import net.pbernard.flattr.rest.FlattrRestException;
 import net.pbernard.flattr.rest.User;
 
 public class UserTest extends FlattrRestTestCase {
 
 	public void testBuildUser() throws FlattrRestException {
-		String xmlDoc = 
-			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-			"<flattr>" +
-			"  <version>0.0.1</version>" +
-			"  <user>" +
-	        "    <id>244</id>" +
-	        "    <username>bomelin</username>" +
-	        "    <firstname>Mattias</firstname>" +
-	        "    <lastname>Bomelin</lastname>" +
-	        "    <city>Skurup</city>" +
-	        "    <country>Sweden</country>" +
-	        "    <gravatar>https://secure.gravatar.com/avatar/59bc275a1d17a4f2ec448538426803bf?s=120&amp;r=pg</gravatar>" +
-	        "    <email>mattias@flattr.com</email>" +
-	        "    <description><![CDATA[Flattr meee]]></description>" +
-	        "    <thingcount>10</thingcount>" +
-	        "  </user>" +
-	        "</flattr>";
-		InputStream is = new ByteArrayInputStream(xmlDoc.getBytes());
-		User u = User.buildUser(null, is);
+		User u = User.buildUser(null, getClass().getClassLoader()
+				.getResourceAsStream("one_user.xml"));
 		assertEquals(244, u.getId());
 		assertEquals("bomelin", u.getUserName());
 		assertEquals("Mattias", u.getFirstName());
@@ -49,7 +29,7 @@ public class UserTest extends FlattrRestTestCase {
 		assertEquals("Skurup", u.getCity());
 		assertEquals("Sweden", u.getCountry());
 		assertEquals(
-				"https://secure.gravatar.com/avatar/59bc275a1d17a4f2ec448538426803bf?s=120&r=pg", 
+				"https://secure.gravatar.com/avatar/59bc275a1d17a4f2ec448538426803bf?s=120&r=pg",
 				u.getAvatarUrl());
 		assertEquals("mattias@flattr.com", u.getEmail());
 		assertEquals("Flattr meee", u.getDescription());

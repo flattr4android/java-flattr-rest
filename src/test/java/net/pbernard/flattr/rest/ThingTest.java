@@ -14,10 +14,8 @@
  */
 package net.pbernard.flattr.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 import net.pbernard.flattr.rest.FlattrRestException;
 import net.pbernard.flattr.rest.Thing;
@@ -25,22 +23,8 @@ import net.pbernard.flattr.rest.Thing;
 public class ThingTest extends FlattrRestTestCase {
 
 	public void testBuildOneThing() throws FlattrRestException {
-		String xmlDoc = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-				+ "<flattr>" + "<version>0.0.1</version>" + "<thing>"
-				+ "<id>bf12b55dc73d89835fff9696b6cc3883</id>"
-				+ "<created>1276784931</created>"
-				+ "<language>sv_SE</language>"
-				+ "<url>http://www.kontilint.se/kontakt</url>"
-				+ "<title>Kontakta Kontilint</title>"
-				+ "<story><![CDATA[Kontakta Kontilint]]></story>"
-				+ "<clicks>0</clicks>" + "<user>" + "<id>244</id>"
-				+ "<username>Bomelin</username>" + "</user>" + "<tags>"
-				+ "<tag>asd</tag>" + "<tag>fgh</tag>" + "<tag>ert</tag>"
-				+ "</tags>" + "<category>" + "<id>text</id>"
-				+ "<name>Written text</name>" + "</category>"
-				+ "<status>owner</status>" + "</thing>" + "</flattr>";
-		InputStream is = new ByteArrayInputStream(xmlDoc.getBytes());
-		Thing t = Thing.buildOneThing(null, is);
+		Thing t = Thing.buildOneThing(null, getClass().getClassLoader()
+				.getResourceAsStream("one_thing.xml"));
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
 		assertEquals(new Date(1276784931), t.getCreationDate());
 		assertEquals("sv_SE", t.getLanguage());
@@ -61,59 +45,8 @@ public class ThingTest extends FlattrRestTestCase {
 	}
 
 	public void testBuildThings() throws FlattrRestException {
-		String xmlDoc = 
-			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
-			"<flattr>" + 
-			"  <version>0.0.1</version>" + 
-			"  <thing>" + 
-			"    <id>bf12b55dc73d89835fff9696b6cc3883</id>" + 
-			"    <created>1276784931</created>" + 
-			"    <language>sv_SE</language>" + 
-			"    <url>http://www.kontilint.se/kontakt</url>" + 
-			"    <title>Kontakta Kontilint</title>" + 
-			"    <story><![CDATA[Kontakta Kontilint]]></story>" + 
-			"    <clicks>0</clicks>" + 
-			"    <user>" + 
-			"      <id>244</id>" + 
-			"      <username>Bomelin</username>" + 
-			"    </user>" + 
-			"    <tags>" + 
-			"      <tag>asd</tag>" + 
-			"      <tag>fgh</tag>" + 
-			"      <tag>ert</tag>" + 
-			"    </tags>" + 
-			"    <category>" + 
-			"      <id>text</id>" + 
-			"      <name>Written text</name>" + 
-			"    </category>" + 
-			"    <status>owner</status>" + 
-			"  </thing>" + 
-			"  <thing>" + 
-			"    <id>1e3337f323197c97814dc807eff39aa5</id>" + 
-			"    <created>1276784931</created>" + 
-			"    <language>us_EN</language>" + 
-			"    <url>http://www.rotatepdf.net</url>" + 
-			"    <title>Rotate PDF for free</title>" + 
-			"    <story><![CDATA[Rotate PDF online for free]]></story>" + 
-			"    <clicks>3</clicks>" + 
-			"    <user>" + 
-			"      <id>12345</id>" + 
-			"      <username>pbernard</username>" + 
-			"    </user>" + 
-			"    <tags>" + 
-			"      <tag>rotate</tag>" + 
-			"      <tag>pdf</tag>" +  
-			"    </tags>" + 
-			"    <category>" + 
-			"      <id>rest</id>" + 
-			"      <name>The rest</name>" + 
-			"    </category>" + 
-			"    <status>ok</status>" + 
-			"  </thing>" + 
-			"</flattr>";
-		InputStream is = new ByteArrayInputStream(xmlDoc.getBytes());
-
-		ArrayList<Thing> things = Thing.buildThings(null, is);
+		ArrayList<Thing> things = Thing.buildThings(null, getClass()
+				.getClassLoader().getResourceAsStream("two_things.xml"));
 
 		Thing t = things.get(0);
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
