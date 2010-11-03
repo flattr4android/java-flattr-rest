@@ -58,6 +58,7 @@ public class Thing {
 	protected String categoryName;
 	protected String status;
 	protected User user;
+	private boolean clicked = false;
 
 	FlattrRestClient fr;
 
@@ -154,8 +155,10 @@ public class Thing {
 	}
 
 	public String getStatus() {
-		if ((fr != null) && (fr.isDemoMode())) {
+		if ((fr != null) && (fr.isDemoMode()) && (!clicked)) {
 			// In demo mode, always pretend that the thing is clickable
+			// If the thing was successfully clicked, return the actual
+			// status to make the demo realistic
 			return Thing.STATUS_OK;
 		}
 		return status;
@@ -170,6 +173,14 @@ public class Thing {
 			FlattrServerResponseException, ParserConfigurationException,
 			SAXException, IOException {
 		fr.clickThing(getId());
+		updateAfterClick();
+	}
+
+	protected void updateAfterClick() {
+		// If click works, we update the thing manually
+		status = Thing.STATUS_CLICKED;
+		clicks++;
+		clicked = true;
 	}
 
 	public static ArrayList<Thing> buildThings(FlattrRestClient fr,

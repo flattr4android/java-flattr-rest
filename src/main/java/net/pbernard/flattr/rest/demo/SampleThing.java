@@ -86,7 +86,8 @@ public class SampleThing extends Thing {
 	}
 
 	public void click() {
-		// Do nothing
+		// Do nothing, just update the thing accordingly
+		updateAfterClick();
 	}
 
 }
