@@ -164,6 +164,13 @@ public class Thing {
 		return status;
 	}
 
+	/**
+	 * Return a URL to the thing's web page <i>on Flattr web site</i>.
+	 */
+	public String getFlattrURL() {
+		return "https://flattr.com/thing/" + getId();
+	}
+
 	public String toString() {
 		return getTitle() + " - by " + getUserName();
 	}
