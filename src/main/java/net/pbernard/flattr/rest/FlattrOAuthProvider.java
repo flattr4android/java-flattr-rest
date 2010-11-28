@@ -35,7 +35,7 @@ public class FlattrOAuthProvider extends DefaultOAuthProvider {
 		// http://mail-archives.apache.org/mod_mbox/harmony-commits/201002.mbox/%3C1938314103.387611266583707925.JavaMail.jira@brutus.apache.org%3E
 		// That causes another issue with the Content-Length header,
 		// which is not sent while mandatory in a POST request with Flattr.
-		// Thus a GET is used insteadn abd Content-Length is not set anymore.
+		// Thus a GET is used instead, so Content-Length is not set anymore.
 		connection.setRequestMethod("GET");
 
 		connection.setAllowUserInteraction(false);
