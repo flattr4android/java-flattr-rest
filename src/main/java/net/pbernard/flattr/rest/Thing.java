@@ -281,7 +281,10 @@ class ThingSAXHandler extends PortableSAXHandler {
 				} else if (tagName.equals("id")) {
 					currentThing.id = value;
 				} else if (tagName.equals("created")) {
-					currentThing.created = new Date(Long.parseLong(value));
+					// Convert seconds (UNIX/Flattr format) to milliseconds
+					// (Java Date's API)
+					currentThing.created = new Date(
+							Long.parseLong(value) * 1000L);
 				} else if (tagName.equals("language")) {
 					currentThing.language = value;
 				} else if (tagName.equals("url")) {
