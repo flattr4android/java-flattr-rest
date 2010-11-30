@@ -26,7 +26,7 @@ public class ThingTest extends FlattrRestTestCase {
 		Thing t = Thing.buildOneThing(null, getClass().getClassLoader()
 				.getResourceAsStream("one_thing.xml"));
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
-		assertEquals(new Date(1276784931), t.getCreationDate());
+		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
@@ -50,7 +50,7 @@ public class ThingTest extends FlattrRestTestCase {
 
 		Thing t = things.get(0);
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
-		assertEquals(new Date(1276784931), t.getCreationDate());
+		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
@@ -69,7 +69,7 @@ public class ThingTest extends FlattrRestTestCase {
 
 		t = things.get(1);
 		assertEquals("1e3337f323197c97814dc807eff39aa5", t.getId());
-		assertEquals(new Date(1276784931), t.getCreationDate());
+		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
 		assertEquals("us_EN", t.getLanguage());
 		assertEquals("http://www.rotatepdf.net", t.getURL());
 		assertEquals("Rotate PDF for free", t.getTitle());
@@ -85,4 +85,30 @@ public class ThingTest extends FlattrRestTestCase {
 		assertEquals("The rest", t.getCategoryName());
 		assertEquals("ok", t.getStatus());
 	}
+
+	public void testExtractThingIDFromQRCode() {
+		// Classic case
+		assertEquals(
+				"7e4c65bfab8ee31e7d79f4d3b7bcfe19",
+				Thing.extractThingIDFromQRCode("https://flattr.com/thing/7e4c65bfab8ee31e7d79f4d3b7bcfe19"));
+
+		// Extra slash
+		assertEquals(
+				"7e4c65bfab8ee31e7d79f4d3b7bcfe19",
+				Thing.extractThingIDFromQRCode("https://flattr.com/thing/7e4c65bfab8ee31e7d79f4d3b7bcfe19/"));
+
+		// Not a correct format, but it should still work
+		assertEquals(
+				"7e4c65bfab8ee31e7d79f4d3b7bcfe19",
+				Thing.extractThingIDFromQRCode("https://flattr.com/7e4c65bfab8ee31e7d79f4d3b7bcfe19"));
+
+		// Fancy protocol and host
+		assertEquals(
+				"7e4c65bfab8ee31e7d79f4d3b7bcfe19",
+				Thing.extractThingIDFromQRCode("htTtp://mysite.com/thing/7e4c65bfab8ee31e7d79f4d3b7bcfe19"));
+
+		// Bad format
+		assertEquals(null, Thing.extractThingIDFromQRCode("This is not a URL"));
+	}
+
 }

@@ -216,6 +216,20 @@ public class Thing {
 		return al.get(0);
 	}
 
+	public static String extractThingIDFromQRCode(String qrCodeInfo) {
+		int slashIdx = qrCodeInfo.lastIndexOf("/");
+		// URL ends with a slash
+		if (slashIdx == qrCodeInfo.length() - 1) {
+			qrCodeInfo = qrCodeInfo.substring(0, slashIdx);
+			slashIdx = qrCodeInfo.lastIndexOf("/");
+		}
+		// No slash??
+		if (slashIdx < 0) {
+			return null;
+		}
+		return qrCodeInfo.substring(qrCodeInfo.lastIndexOf("/") + 1);
+	}
+
 }
 
 class ThingSAXHandler extends PortableSAXHandler {
