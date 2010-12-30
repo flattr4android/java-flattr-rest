@@ -62,7 +62,7 @@ public class FlattrRestClient {
 
 	/**
 	 * Enable or disable the Demo mode.
-	 *
+	 * 
 	 * When enabled, the demo mode has a couple of side effects:
 	 * <ul>
 	 * <li>The things are always "clickable" and click is always successful but
@@ -137,7 +137,7 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
 			FlattrServerResponseException {
-		if (! isDemoMode()) {
+		if (!isDemoMode()) {
 			sendRequest("/rest/0.0.1/thing/click/id/" + id);
 		}
 		// If demo mode is on, click always works
@@ -206,8 +206,25 @@ public class FlattrRestClient {
 			pw.write(content);
 		}
 		request.connect();
-		if (request.getResponseCode() != 200) {
-			throw new FlattrServerResponseException(request);
+		int reqCode;
+		try {
+			reqCode = request.getResponseCode();
+		}
+		catch(IOException e) {
+			// See http://stackoverflow.com/questions/1357372/ioexception-received-authentication-challenge-is-null-apache-harmony-android
+			if (e.getMessage().equals("Received authentication challenge is null")) {
+				throw new AuthenticationException(request);
+			}
+			else {
+				throw e;
+			}
+		}
+		if (reqCode != 200) {
+			if (reqCode == 401) {
+				throw new AuthenticationException(request);
+			} else {
+				throw new FlattrServerResponseException(request);
+			}
 		}
 		return request;
 	}
