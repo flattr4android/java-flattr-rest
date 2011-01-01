@@ -2,7 +2,7 @@
 ================================
 
 Introduction
----------------------------------------
+-------------------
 java-flattr-rest is a Java library to access the [Flattr](http://flattr.com/) REST API. 
 It covers all the features exposed through the API and provides a fa&ccedil;ade for the Oauth protocol. 
 java-flattr-rest Oauth features and based on [oauth-signpost](http://code.google.com/p/oauth-signpost/).
@@ -21,7 +21,10 @@ Thus it is suitable for desktop Java applications.
 in a server application, this is not its intended target. Have a look to 
 [flattr4j](http://www.shredzone.org/wiki/flattr4j).
 
-Contact
-----------
+License
+-------------------
+The SDK is available under the [Apache licence v2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
+Contact
+-------------------
 If you have any questions, please feel free to [contact us](mailto:contact@flattr4android.com).
