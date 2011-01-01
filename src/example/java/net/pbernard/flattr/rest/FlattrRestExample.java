@@ -73,8 +73,8 @@ public class FlattrRestExample {
 			t.setTitle("My sample thing");
 			t.setDescription("This is my sample thing....");
 			t.setLanguage("en_US");
-			t.setCategory("rest");
-			t.setUrl("http://some_url.net");
+			t.setCategoryName("rest");
+			t.setURL("http://some_url.net");
 			fr.register(t);
 
 			System.out.println("Languages:");
