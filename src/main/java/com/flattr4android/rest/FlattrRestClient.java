@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pbernard.flattr.rest;
+package com.flattr4android.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.pbernard.flattr.rest.demo.SampleThing;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -31,6 +30,8 @@ import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
 import org.xml.sax.SAXException;
+
+import com.flattr4android.rest.demo.SampleThing;
 
 /**
  * <code>FlattrRestClient</code> is the main entry point to the API.

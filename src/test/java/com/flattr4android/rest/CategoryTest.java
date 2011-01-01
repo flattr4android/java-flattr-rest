@@ -12,12 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pbernard.flattr.rest;
+package com.flattr4android.rest;
 
 import java.util.ArrayList;
 
-import net.pbernard.flattr.rest.Category;
-import net.pbernard.flattr.rest.FlattrRestException;
+import com.flattr4android.rest.Category;
+import com.flattr4android.rest.FlattrRestException;
+
 
 public class CategoryTest extends FlattrRestTestCase {
 

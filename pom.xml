@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.pbernard.flattr.rest</groupId>
+  <groupId>com.flattr4android.rest</groupId>
   <artifactId>java-flattr-rest</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1.2</version>
+  <version>0.0.1.3</version>
   <name>java-flattr-rest</name>
   <description>
     Java library for the Flattr Rest API.
   </description>
-  <url>http://github.com/phbernard/java-flattr-rest</url>
+  <url>http://github.com/flattr4android/java-flattr-rest</url>
 
   <issueManagement>
     <system>Github Issue Tracker</system>
-    <url>http://github.com/phbernard/java-flattr-rest/issues</url>
+    <url>http://github.com/flattr4android/java-flattr-rest/issues</url>
   </issueManagement>
 
   <developers>
@@ -34,9 +34,9 @@
   </licenses>
 
   <scm>
-    <url>http://github.com/phbernard/java-flattr-rest</url>
-    <connection>scm:git:git://github.com:phbernard/java-flattr-rest.git</connection>
-    <developerConnection>scm:git:git@github.com:phbernard/java-flattr-rest.git</developerConnection>
+    <url>http://github.com/flattr4android/java-flattr-rest</url>
+    <connection>scm:git:git://github.com:flattr4android/java-flattr-rest.git</connection>
+    <developerConnection>scm:git:git@github.com:flattr4android/java-flattr-rest.git</developerConnection>
   </scm>
 
   <properties>
@@ -64,8 +64,8 @@
 
   <!-- build settings -->
   <organization>
-  	<name>Philippe Bernard</name>
-  	<url>http://www.philippebernard.fr/</url>
+  	<name>Flattr4Android</name>
+  	<url>http://flattr4android.com/</url>
   </organization>
 
   <build>

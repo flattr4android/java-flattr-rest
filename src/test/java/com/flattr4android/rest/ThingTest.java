@@ -12,13 +12,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pbernard.flattr.rest;
+package com.flattr4android.rest;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import net.pbernard.flattr.rest.FlattrRestException;
-import net.pbernard.flattr.rest.Thing;
+import com.flattr4android.rest.FlattrRestException;
+import com.flattr4android.rest.Thing;
+
 
 public class ThingTest extends FlattrRestTestCase {
 

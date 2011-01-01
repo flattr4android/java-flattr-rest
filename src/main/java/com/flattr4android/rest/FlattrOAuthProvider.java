@@ -1,4 +1,4 @@
-package net.pbernard.flattr.rest;
+package com.flattr4android.rest;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

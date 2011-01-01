@@ -12,10 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.pbernard.flattr.rest;
+package com.flattr4android.rest;
 
-import net.pbernard.flattr.rest.FlattrRestException;
-import net.pbernard.flattr.rest.User;
+import com.flattr4android.rest.FlattrRestException;
+import com.flattr4android.rest.User;
 
 public class UserTest extends FlattrRestTestCase {
 

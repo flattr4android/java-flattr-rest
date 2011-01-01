@@ -1,10 +1,11 @@
-package net.pbernard.flattr.rest.demo;
+package com.flattr4android.rest.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.pbernard.flattr.rest.Thing;
+import com.flattr4android.rest.Thing;
+
 
 public class SampleThing extends Thing {
 
