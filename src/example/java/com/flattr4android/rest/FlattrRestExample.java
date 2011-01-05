@@ -26,7 +26,6 @@ import com.flattr4android.rest.Language;
 import com.flattr4android.rest.Thing;
 import com.flattr4android.rest.User;
 
-
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 
@@ -34,8 +33,20 @@ public class FlattrRestExample {
 
 	public static void main(String[] args) {
 		try {
-			OAuthConsumer consumer = new FlattrOAuthConsumer("<consumer key>",
-					"<consumer secret>");
+			// This consumer uses java-flattr-rest Sample Application key.
+			// This application is *supposed* to be used only
+			// in this example. But as this source code is open source,
+			// keep in mind that anybody can reuse it for any purpose
+			// (understand: bad purpose).
+			// If someone manage to steal the token and token secret you
+			// are going to generate while running this program,
+			// he will be able to view/click/submit in your name.
+			// In 99% cases, that's ok, nobody while get your token/secret.
+			// If you're paranoid, replace the application key above
+			// with your own application key.
+			OAuthConsumer consumer = new FlattrOAuthConsumer(
+					"FdngHnEZdggU1zoohFuZ8wFrLR9AjeaPinVQBpGEwMoocDDj8X96jEoVlolvtmaB",
+					"AVi1bOvxrKLtefCc2C9c6nXhB9CUlCmLouDp8ZMpzoIDtbGmDFozTbHkaa5mDhYR");
 			OAuthProvider provider = new FlattrOAuthProvider();
 			System.out.println("Fetching request token from Flattr...");
 
@@ -59,8 +70,12 @@ public class FlattrRestExample {
 			System.out.println("Fetching access token from Flattr...");
 			provider.retrieveAccessToken(consumer, pin);
 
-			System.out.println("Access token: " + consumer.getToken());
-			System.out.println("Token secret: " + consumer.getTokenSecret());
+			// Not printed for safety reasons. If you encounter a problem
+			// with this program, ask for help on a forum or whatever and
+			// copy/paste your traces, a malicious user could use your generated
+			// token and token secret to click or submit in your name.
+			// System.out.println("Access token: " + consumer.getToken());
+			// System.out.println("Token secret: " + consumer.getTokenSecret());
 
 			FlattrRestClient fr = new FlattrRestClient(consumer);
 			User u = fr.getMe();
