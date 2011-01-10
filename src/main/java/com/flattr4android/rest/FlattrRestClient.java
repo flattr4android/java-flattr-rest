@@ -210,13 +210,13 @@ public class FlattrRestClient {
 		int reqCode;
 		try {
 			reqCode = request.getResponseCode();
-		}
-		catch(IOException e) {
-			// See http://stackoverflow.com/questions/1357372/ioexception-received-authentication-challenge-is-null-apache-harmony-android
-			if (e.getMessage().equals("Received authentication challenge is null")) {
+		} catch (IOException e) {
+			// See
+			// http://stackoverflow.com/questions/1357372/ioexception-received-authentication-challenge-is-null-apache-harmony-android
+			if (e.getMessage().equals(
+					"Received authentication challenge is null")) {
 				throw new AuthenticationException(request);
-			}
-			else {
+			} else {
 				throw e;
 			}
 		}
