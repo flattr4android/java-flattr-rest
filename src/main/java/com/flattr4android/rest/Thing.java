@@ -44,6 +44,12 @@ public class Thing {
 	public static final String STATUS_INACTIVE = "inactive";
 	public static final String STATUS_CLICKED = "clicked";
 
+	public static final int INT_STATUS_UNKNOWN = 1;
+	public static final int INT_STATUS_OK = 2;
+	public static final int INT_STATUS_OWNER = 3;
+	public static final int INT_STATUS_INACTIVE = 4;
+	public static final int INT_STATUS_CLICKED = 5;
+
 	protected String id;
 	protected Date created;
 	protected String language;
@@ -162,6 +168,33 @@ public class Thing {
 			return Thing.STATUS_OK;
 		}
 		return status;
+	}
+
+	/**
+	 * Convenient method to return the status as an int instead of a string.
+	 * 
+	 * @return <code>INT_STATUS_UNKNOWN</code> if the status returned by the
+	 *         server does not match a specified status.
+	 * 
+	 * @see Thing#INT_STATUS_CLICKED
+	 * @see Thing#INT_STATUS_OK
+	 * @see Thing#INT_STATUS_OWNER
+	 * @see Thing#INT_STATUS_INACTIVE
+	 * @see Thing#INT_STATUS_UNKNOWN
+	 */
+	public int getIntStatus() {
+		String st = getStatus();
+		if (st.equals(STATUS_OK)) {
+			return INT_STATUS_OK;
+		} else if (st.equals(STATUS_CLICKED)) {
+			return INT_STATUS_CLICKED;
+		} else if (st.equals(STATUS_OWNER)) {
+			return INT_STATUS_OWNER;
+		} else if (st.equals(STATUS_INACTIVE)) {
+			return INT_STATUS_INACTIVE;
+		} else {
+			return INT_STATUS_UNKNOWN;
+		}
 	}
 
 	/**
