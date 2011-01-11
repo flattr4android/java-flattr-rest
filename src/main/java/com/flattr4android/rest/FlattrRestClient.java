@@ -89,7 +89,7 @@ public class FlattrRestClient {
 	}
 
 	/**
-	 * Return a user by his ID.
+	 * Return a user by Id.
 	 */
 	public User getUser(int id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
@@ -97,6 +97,19 @@ public class FlattrRestClient {
 			FlattrRestException {
 		return User.buildUser(this,
 				getResourceInputStream("/rest/0.0.1/user/get/id/" + id));
+	}
+
+	/**
+	 * Return a user by name.
+	 */
+	public User getUser(String userName) throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			ParserConfigurationException, SAXException, IOException,
+			FlattrRestException {
+		return User
+				.buildUser(this,
+						getResourceInputStream("/rest/0.0.1/user/get/name/"
+								+ userName));
 	}
 
 	/**
