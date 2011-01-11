@@ -3,7 +3,7 @@
   <groupId>com.flattr4android.rest</groupId>
   <artifactId>java-flattr-rest</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1.3</version>
+  <version>0.0.1.4</version>
   <name>java-flattr-rest</name>
   <description>
     Java library for the Flattr Rest API.
