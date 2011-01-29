@@ -39,6 +39,8 @@ import com.flattr4android.rest.demo.SampleThing;
 public class FlattrRestClient {
 
 	public static final String DEMO_SAMPLE_THING_ID = "demo_thing";
+	
+	public static final String API_PATH_PREFIX = "/rest/0.0.1/";
 
 	private OAuthConsumer consumer;
 	private boolean demoMode = false;
@@ -85,7 +87,7 @@ public class FlattrRestClient {
 			ParserConfigurationException, SAXException, IOException,
 			FlattrRestException {
 		return User.buildUser(this,
-				getResourceInputStream("/rest/0.0.1/user/me"));
+				getResourceInputStream(API_PATH_PREFIX + "user/me"));
 	}
 
 	/**
@@ -96,7 +98,7 @@ public class FlattrRestClient {
 			ParserConfigurationException, SAXException, IOException,
 			FlattrRestException {
 		return User.buildUser(this,
-				getResourceInputStream("/rest/0.0.1/user/get/id/" + id));
+				getResourceInputStream(API_PATH_PREFIX + "user/get/id/" + id));
 	}
 
 	/**
@@ -108,7 +110,7 @@ public class FlattrRestClient {
 			FlattrRestException {
 		return User
 				.buildUser(this,
-						getResourceInputStream("/rest/0.0.1/user/get/name/"
+						getResourceInputStream(API_PATH_PREFIX + "user/get/name/"
 								+ userName));
 	}
 
@@ -125,7 +127,7 @@ public class FlattrRestClient {
 			return demoSampleThing;
 		}
 		return Thing.buildOneThing(this,
-				getResourceInputStream("/rest/0.0.1/thing/get/id/" + id));
+				getResourceInputStream(API_PATH_PREFIX + "thing/get/id/" + id));
 	}
 
 	public void setDemoSampleThing(Thing model) {
@@ -140,7 +142,7 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrRestException, IOException {
 		return Thing.buildThings(this,
-				getResourceInputStream("/rest/0.0.1/thing/listbyuser/id/"
+				getResourceInputStream(API_PATH_PREFIX + "thing/listbyuser/id/"
 						+ userId));
 	}
 
@@ -152,7 +154,7 @@ public class FlattrRestClient {
 			ParserConfigurationException, SAXException, IOException,
 			FlattrServerResponseException {
 		if (!isDemoMode()) {
-			sendRequest("/rest/0.0.1/thing/click/id/" + id);
+			sendRequest(API_PATH_PREFIX + "thing/click/id/" + id);
 		}
 		// If demo mode is on, click always works
 	}
@@ -174,7 +176,7 @@ public class FlattrRestClient {
 		}
 		content += "</tags>" + "</thing>";
 
-		sendRequest("/rest/0.0.1/thing/register", "POST", content);
+		sendRequest(API_PATH_PREFIX + "thing/register", "POST", content);
 	}
 
 	/**
@@ -185,7 +187,7 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
 		return Language
-				.buildLanguages(getResourceInputStream("/rest/0.0.1/feed/languages"));
+				.buildLanguages(getResourceInputStream(API_PATH_PREFIX + "feed/languages"));
 	}
 
 	/**
@@ -196,7 +198,7 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
 		return Category
-				.buildCategories(getResourceInputStream("/rest/0.0.1/feed/categories"));
+				.buildCategories(getResourceInputStream(API_PATH_PREFIX + "feed/categories"));
 	}
 
 	private HttpURLConnection sendRequest(String uri)
