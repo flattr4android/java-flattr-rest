@@ -201,7 +201,14 @@ public class Thing {
 	 * Return a URL to the thing's web page <i>on Flattr web site</i>.
 	 */
 	public String getFlattrURL() {
-		return "https://flattr.com/thing/" + getId();
+		return getFlattrURL(getId());
+	}
+
+	/**
+	 * Return a URL to the thing's web page <i>on Flattr web site</i>.
+	 */
+	public static String getFlattrURL(String thingId) {
+		return "https://flattr.com/thing/" + thingId;
 	}
 
 	public String toString() {
