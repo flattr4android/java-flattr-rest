@@ -20,6 +20,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -39,8 +41,8 @@ import com.flattr4android.rest.demo.SampleThing;
 public class FlattrRestClient {
 
 	public static final String DEMO_SAMPLE_THING_ID = "demo_thing";
-	
-	public static final String API_PATH_PREFIX = "/rest/0.0.1/";
+
+	public static final String API_PATH_PREFIX = "/rest/0.5/";
 
 	private OAuthConsumer consumer;
 	private boolean demoMode = false;
@@ -86,8 +88,8 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
 			FlattrRestException {
-		return User.buildUser(this,
-				getResourceInputStream(API_PATH_PREFIX + "user/me"));
+		return User.buildUser(this, getResourceInputStream(API_PATH_PREFIX
+				+ "user/me"));
 	}
 
 	/**
@@ -97,8 +99,8 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
 			FlattrRestException {
-		return User.buildUser(this,
-				getResourceInputStream(API_PATH_PREFIX + "user/get/id/" + id));
+		return User.buildUser(this, getResourceInputStream(API_PATH_PREFIX
+				+ "user/get/id/" + id));
 	}
 
 	/**
@@ -108,16 +110,25 @@ public class FlattrRestClient {
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			ParserConfigurationException, SAXException, IOException,
 			FlattrRestException {
-		return User
-				.buildUser(this,
-						getResourceInputStream(API_PATH_PREFIX + "user/get/name/"
-								+ userName));
+		return User.buildUser(this, getResourceInputStream(API_PATH_PREFIX
+				+ "user/get/name/" + userName));
+	}
+
+	/**
+	 * Return a thing by its ID.
+	 * 
+	 * @deprecated Use {@link FlattrRestClient#getThingById(String)}
+	 */
+	public Thing getThing(String id) throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		return getThingById(id);
 	}
 
 	/**
 	 * Return a thing by its ID.
 	 */
-	public Thing getThing(String id) throws OAuthMessageSignerException,
+	public Thing getThingById(String id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrRestException, IOException {
 		if (isDemoMode() && id.equals(DEMO_SAMPLE_THING_ID)) {
@@ -126,8 +137,35 @@ public class FlattrRestClient {
 			}
 			return demoSampleThing;
 		}
-		return Thing.buildOneThing(this,
-				getResourceInputStream(API_PATH_PREFIX + "thing/get/id/" + id));
+		return Thing.buildOneThing(this, getResourceInputStream(API_PATH_PREFIX
+				+ "thing/get/id/" + id));
+	}
+
+	/**
+	 * Return a thing by its URL.
+	 */
+	public Thing getThingByURL(String url) throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		return Thing.buildOneThing(this, getResourceInputStream(API_PATH_PREFIX
+				+ "thing/get/url/" + url));
+	}
+
+	/**
+	 * Search things.
+	 * 
+	 * @see http://developers.flattr.net/doku.php/thing_methods_0.5
+	 */
+	public ArrayList<Thing> browseThings(String... query)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		String uri = "thing/browse";
+		for (int i = 0; i < query.length; i++) {
+			uri += query[i];
+		}
+		return Thing.buildThings(this, getResourceInputStream(API_PATH_PREFIX
+				+ uri));
 	}
 
 	public void setDemoSampleThing(Thing model) {
@@ -141,9 +179,87 @@ public class FlattrRestClient {
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrRestException, IOException {
-		return Thing.buildThings(this,
-				getResourceInputStream(API_PATH_PREFIX + "thing/listbyuser/id/"
-						+ userId));
+		return Thing.buildThings(this, getResourceInputStream(API_PATH_PREFIX
+				+ "thing/browse/user/" + userId));
+	}
+
+	/**
+	 * Return the list of clicks performed by the authenticated user.
+	 */
+	public ArrayList<Click> getMyClicks() throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrServerResponseException, FlattrRestException, IOException {
+		return getMyClicks("");
+	}
+
+	/**
+	 * Return the list of clicks performed during a specific month by the
+	 * authenticated user.
+	 * 
+	 * @param period
+	 *            The targeted period (format: "yyyymm", eg. "201012").
+	 */
+	public ArrayList<Click> getMyClicks(String period)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrServerResponseException, FlattrRestException, IOException {
+		return Click.buildClicks(this, getResourceInputStream(API_PATH_PREFIX
+				+ "user/clicks/period/" + period));
+	}
+
+	public ArrayList<Click> getMyClicks(Date startDate, Date stopDate)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrServerResponseException, FlattrRestException, IOException {
+		ArrayList<Click> clicks = new ArrayList<Click>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(startDate);
+		int startYear = cal.get(Calendar.YEAR);
+		int startMonth = cal.get(Calendar.MONTH);
+		int startDay = cal.get(Calendar.DAY_OF_MONTH);
+
+		cal.setTime(stopDate);
+		int stopYear = cal.get(Calendar.YEAR);
+		int stopMonth = cal.get(Calendar.MONTH);
+		int stopDay = cal.get(Calendar.DAY_OF_MONTH);
+
+		int currentYear = startYear;
+		int currentMonth = startMonth;
+		Calendar currentClickDate = Calendar.getInstance();
+
+		while ((currentYear < stopYear)
+				|| ((currentYear == stopYear) && (currentMonth <= stopMonth))) {
+			String period = Integer.toString(currentYear * 100
+					+ (currentMonth + 1));
+			ArrayList<Click> current = getMyClicks(period);
+			// If we are in the first month of the interval,
+			// be careful not to add clicks too early in the month.
+			boolean checkLow = ((currentYear == startYear) && (currentMonth == startMonth));
+			boolean checkHigh = ((currentYear == stopYear) && (currentMonth == stopMonth));
+			if ((!checkLow) && (!checkHigh)) {
+				// Clicks in the middle of the interval: add all!
+				clicks.addAll(current);
+			} else {
+				// Check one by one
+				for (Click click : current) {
+					currentClickDate.setTime(click.getDate());
+					int currentDay = currentClickDate
+							.get(Calendar.DAY_OF_MONTH);
+					if (((!checkLow) || (currentDay >= startDay))
+							&& ((!checkHigh) || (currentDay <= stopDay))) {
+						clicks.add(click);
+					}
+				}
+			}
+
+			currentMonth++;
+			if (currentMonth > Calendar.DECEMBER) {
+				currentMonth = Calendar.JANUARY;
+				currentYear++;
+			}
+		}
+
+		return clicks;
 	}
 
 	/**
@@ -186,8 +302,8 @@ public class FlattrRestClient {
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
-		return Language
-				.buildLanguages(getResourceInputStream(API_PATH_PREFIX + "feed/languages"));
+		return Language.buildLanguages(getResourceInputStream(API_PATH_PREFIX
+				+ "feed/languages"));
 	}
 
 	/**
@@ -197,8 +313,8 @@ public class FlattrRestClient {
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
-		return Category
-				.buildCategories(getResourceInputStream(API_PATH_PREFIX + "feed/categories"));
+		return Category.buildCategories(getResourceInputStream(API_PATH_PREFIX
+				+ "feed/categories"));
 	}
 
 	private HttpURLConnection sendRequest(String uri)

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flattr>
+    <version>0.5</version>
+    <clicks>
+      <click>
+          <id>12345</id>
+          <click_time>1291133253</click_time>
+          <thing>
+              <id>0282de399c3892aa19165e1a0baaccdc</id>
+              <title>Free Brokep</title>
+              <url>http://blog.flattr.net/2010/11/free-brokep/</url>
+          </thing>
+      </click>
+      <click>
+          <id>12346</id>
+          <click_time>1291133271</click_time>
+          <thing>
+              <id>1e3337f323197c97814dc807eff39aa5</id>
+              <title>Rotate PDF for free</title>
+              <url>http://www.rotatepdf.net</url>
+          </thing>
+      </click>
+      <click>
+          <id>12349</id>
+          <click_time>1290135221</click_time>
+          <thing>
+              <id>bf12b55dc73d89835fff9696b6cc3883</id>
+              <title>Kontakta Kontilint</title>
+              <url>http://www.kontilint.se/kontakt</url>
+          </thing>
+      </click>
+  </clicks>
+</flattr>

@@ -37,7 +37,7 @@ import org.xml.sax.XMLReader;
  * href="http://developers.flattr.net/doku.php/thing_methods">Flattr API
  * documentation</a>.
  */
-public class Thing {
+public class Thing implements ThingOverview {
 
 	public static final String STATUS_OK = "ok";
 	public static final String STATUS_OWNER = "owner";
@@ -268,6 +268,21 @@ public class Thing {
 			return null;
 		}
 		return qrCodeInfo.substring(qrCodeInfo.lastIndexOf("/") + 1);
+	}
+
+	@Override
+	public String getThingId() {
+		return getId();
+	}
+
+	@Override
+	public String getThingTitle() {
+		return getTitle();
+	}
+
+	@Override
+	public String getThingURL() {
+		return getURL();
 	}
 
 }
