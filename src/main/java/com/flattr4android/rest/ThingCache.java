@@ -58,8 +58,8 @@ public class ThingCache {
 	/**
 	 * Returned a cached thing.
 	 * 
-	 * #see {@link ThingCache#getThingById(String, long)}
-	 * #see {@link ThingCache#getDefaultMaxAge()}
+	 * @see ThingCache#getThingById(String, long)
+	 * @see ThingCache#getDefaultMaxAge()
 	 */
 	public Thing getThingById(String id) {
 		return getThingById(id, getDefaultMaxAge());
@@ -91,10 +91,10 @@ public class ThingCache {
 	}
 	
 	/**
-	 * When the cache is not enabled, it does not keep trace of things
+	 * When the cache is not enabled, it does not keep trace of things.
 	 * 
-	 * #see {@link ThingCache#addOrRefheshThing(Thing)}
-	 * #see {@link ThingCache#getThingById(String, long)}
+	 * @see ThingCache#addOrRefheshThing(Thing)
+	 * @see ThingCache#getThingById(String, long)
 	 */
 	public boolean isEnabled() {
 		return enabled;
