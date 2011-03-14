@@ -47,6 +47,7 @@ public class FlattrRestClient {
 	private OAuthConsumer consumer;
 	private boolean demoMode = false;
 	private Thing demoSampleThing;
+	private ThingCache thingCache = new ThingCache();
 
 	public FlattrRestClient(OAuthConsumer consumer) {
 		this.consumer = consumer;
@@ -79,6 +80,10 @@ public class FlattrRestClient {
 	 */
 	public void setDemoMode(boolean demoMode) {
 		this.demoMode = demoMode;
+	}
+
+	public ThingCache getThingCache() {
+		return thingCache;
 	}
 
 	/**
@@ -126,19 +131,36 @@ public class FlattrRestClient {
 	}
 
 	/**
-	 * Return a thing by its ID.
+	 * Return a thing by its ID. This method only look in the cache (and
+	 * potentialy returns the demo thing) and does not perform any network
+	 * access.
 	 */
-	public Thing getThingById(String id) throws OAuthMessageSignerException,
-			OAuthExpectationFailedException, OAuthCommunicationException,
-			FlattrRestException, IOException {
+	public Thing getCachedThingById(String id) {
 		if (isDemoMode() && id.equals(DEMO_SAMPLE_THING_ID)) {
 			if (demoSampleThing == null) {
 				demoSampleThing = new SampleThing();
 			}
 			return demoSampleThing;
 		}
-		return Thing.buildOneThing(this, getResourceInputStream(API_PATH_PREFIX
-				+ "thing/get/id/" + id));
+		return thingCache.getThingById(id);
+	}
+
+	/**
+	 * Return a thing by its ID.
+	 */
+	public Thing getThingById(String id) throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		// First, look in the cache
+		Thing thing = getCachedThingById(id);
+		// Not found: network to the rescue
+		if (thing == null) {
+			thing = Thing.buildOneThing(this,
+					getResourceInputStream(API_PATH_PREFIX + "thing/get/id/"
+							+ id));
+			thingCache.addOrRefheshThing(thing);
+		}
+		return thing;
 	}
 
 	/**
