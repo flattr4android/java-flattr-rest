@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flattr>
+    <version>0.5</version>
+    <subscriptions>
+        <subscription>
+            <id>12345</id>
+            <months>6</months>
+            <monthsleft>4</monthsleft>
+            <added>28734787237</added>
+            <thing>
+               <id>0282de399c3892aa19165e1a0baaccdc</id>
+               <title>My little pony fan club</title>
+               <url>http://mylittleponyfanclub.com</url>
+            </thing>
+        </subscription>
+    </subscriptions>
+</flattr>

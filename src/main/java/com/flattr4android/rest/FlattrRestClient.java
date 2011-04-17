@@ -285,6 +285,16 @@ public class FlattrRestClient {
 	}
 
 	/**
+	 * Return the list of ongoing subscriptions of the authenticated user.
+	 */
+	public ArrayList<Subscription> getMySubscriptions() throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrServerResponseException, FlattrRestException, IOException {
+		return Subscription.buildSubscriptions(this, getResourceInputStream(API_PATH_PREFIX
+				+ "subscription/list"));
+	}
+
+	/**
 	 * Click a thing by its ID.
 	 */
 	public void clickThing(String id) throws OAuthMessageSignerException,

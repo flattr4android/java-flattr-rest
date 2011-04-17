@@ -17,6 +17,8 @@ package com.flattr4android.rest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.flattr4android.rest.Category;
 import com.flattr4android.rest.FlattrOAuthConsumer;
@@ -84,6 +86,24 @@ public class FlattrRestExample {
 			ArrayList<Thing> things = u.getThings();
 			for (Thing thing : things) {
 				System.out.println("\t" + thing);
+			}
+
+			System.out.println("Your subscriptions:");
+			ArrayList<Subscription> subscriptions = fr.getMySubscriptions();
+			for (Subscription s : subscriptions) {
+				System.out.println("\t" + s);
+			}
+
+			System.out.println("Your clicks:");
+			Date today = new Date(System.currentTimeMillis());
+			Calendar oneMonthAgo = Calendar.getInstance();
+			oneMonthAgo.setTime(today);
+			oneMonthAgo.add(Calendar.MONTH, -1);
+
+			ArrayList<Click> clicks = fr.getMyClicks(oneMonthAgo.getTime(),
+					today);
+			for (Click click : clicks) {
+				System.out.println("\t" + click);
 			}
 
 			System.out.println("Register a new thing");
