@@ -20,11 +20,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.flattr4android.rest.Category;
 import com.flattr4android.rest.FlattrOAuthConsumer;
 import com.flattr4android.rest.FlattrOAuthProvider;
 import com.flattr4android.rest.FlattrRestClient;
-import com.flattr4android.rest.Language;
 import com.flattr4android.rest.Thing;
 import com.flattr4android.rest.User;
 
