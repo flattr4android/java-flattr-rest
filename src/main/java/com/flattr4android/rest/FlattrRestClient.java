@@ -339,14 +339,14 @@ public class FlattrRestClient {
 				+ "feed/categories"));
 	}
 
-	private HttpURLConnection sendRequest(String uri)
+	protected HttpURLConnection sendRequest(String uri)
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, IOException {
 		return sendRequest(uri, "GET", null);
 	}
 
-	private HttpURLConnection sendRequest(String uri, String method,
+	protected HttpURLConnection sendRequest(String uri, String method,
 			String content) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			IOException, FlattrServerResponseException {
@@ -383,7 +383,7 @@ public class FlattrRestClient {
 		return request;
 	}
 
-	private InputStream getResourceInputStream(String uri) throws IOException,
+	protected InputStream getResourceInputStream(String uri) throws IOException,
 			OAuthMessageSignerException, OAuthExpectationFailedException,
 			OAuthCommunicationException, FlattrServerResponseException {
 		return (InputStream) sendRequest(uri).getContent();
