@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -196,6 +197,8 @@ public class FlattrRestClient {
 
 	/**
 	 * Get the things of a user.
+	 * 
+	 * @see FlattrRestClient#browse(String, List, List, List, List)
 	 */
 	public ArrayList<Thing> getUserThings(int userId)
 			throws OAuthMessageSignerException,
@@ -203,6 +206,70 @@ public class FlattrRestClient {
 			FlattrRestException, IOException {
 		return Thing.buildThings(this, getResourceInputStream(API_PATH_PREFIX
 				+ "thing/browse/user/" + userId));
+	}
+
+	/**
+	 * Get the things by a single tag.
+	 * 
+	 * @see FlattrRestClient#browse(String, List, List, List, List)
+	 */
+	public ArrayList<Thing> getThingsByTag(String tag)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		return Thing.buildThings(this, getResourceInputStream(API_PATH_PREFIX
+				+ "thing/browse/tag/" + tag));
+	}
+
+	/**
+	 * Browse things.
+	 * 
+	 * @param searchedText Text to be present in the thing's title, or <code>null</code> if nothing is expected.
+	 * @param tags Searched tags, or <code>null</code> or empty list if nothing is expected.
+	 * @param categories Searched categories, or <code>null</code> or empty list if nothing is expected.
+	 * @param languages Searched languages, or <code>null</code> or empty list if nothing is expected.
+	 * @param users Searched users, or <code>null</code> or empty list if nothing is expected.
+	 * 
+	 * @see FlattrRestClient#getCategories()
+	 * @see FlattrRestClient#getLanguages()
+	 */
+	public ArrayList<Thing> browse(String searchedText, List<String> tags,
+			List<String> categories, List<String> languages, List<String> users)
+			throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+
+		return Thing.buildThings(
+				this,
+				getResourceInputStream(getBrowseURI(searchedText, tags,
+						categories, languages, users)));
+	}
+
+	static String getBrowseURI(String searchedText, List<String> tags,
+			List<String> categories, List<String> languages, List<String> users) {
+		String uri = API_PATH_PREFIX + "thing/browse";
+		if (searchedText != null) {
+			uri += "/query/" + searchedText;
+		}
+		uri += getParameterString("tag", tags);
+		uri += getParameterString("category", categories);
+		uri += getParameterString("language", languages);
+		uri += getParameterString("user", users);
+		return uri;
+	}
+
+	private static String getParameterString(String paramName, List<String> params) {
+		if ((params == null) || (params.size() <= 0)) {
+			return "";
+		}
+		StringBuffer result = new StringBuffer("/");
+		result.append(paramName);
+		result.append("/");
+		for (String s : params) {
+			result.append(s);
+			result.append(",");
+		}
+		return result.substring(0, result.length() - 1);
 	}
 
 	/**
@@ -287,11 +354,12 @@ public class FlattrRestClient {
 	/**
 	 * Return the list of ongoing subscriptions of the authenticated user.
 	 */
-	public ArrayList<Subscription> getMySubscriptions() throws OAuthMessageSignerException,
+	public ArrayList<Subscription> getMySubscriptions()
+			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
-		return Subscription.buildSubscriptions(this, getResourceInputStream(API_PATH_PREFIX
-				+ "subscription/list"));
+		return Subscription.buildSubscriptions(this,
+				getResourceInputStream(API_PATH_PREFIX + "subscription/list"));
 	}
 
 	/**
@@ -393,9 +461,10 @@ public class FlattrRestClient {
 		return request;
 	}
 
-	protected InputStream getResourceInputStream(String uri) throws IOException,
-			OAuthMessageSignerException, OAuthExpectationFailedException,
-			OAuthCommunicationException, FlattrServerResponseException {
+	protected InputStream getResourceInputStream(String uri)
+			throws IOException, OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrServerResponseException {
 		return (InputStream) sendRequest(uri).getContent();
 	}
 

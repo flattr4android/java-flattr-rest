@@ -16,6 +16,7 @@ package com.flattr4android.rest;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Hashtable;
 
@@ -25,6 +26,18 @@ import oauth.signpost.exception.OAuthMessageSignerException;
 
 public class FlattrRestClientTest extends FlattrRestTestCase {
 
+	public void testGetBrowseURI() {
+		assertEquals("/rest/0.5/thing/browse/tag/flattr,money", 
+				FlattrRestClient.getBrowseURI(null, Arrays.asList(new String[]{"flattr", "money"}), 
+						null, null, new ArrayList<String>()));
+		assertEquals("/rest/0.5/thing/browse/query/blog/category/text/language/sv_SE,en_GB", 
+				FlattrRestClient.getBrowseURI("blog", null, 
+						Arrays.asList(new String[]{"text"}), Arrays.asList(new String[]{"sv_SE", "en_GB"}), null));
+		assertEquals("/rest/0.5/thing/browse/user/foo,bar,foobar", 
+				FlattrRestClient.getBrowseURI(null, null, 
+						null, null, Arrays.asList(new String[]{"foo", "bar", "foobar"})));
+	}
+	
 	public void testGetMyClicks() throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, FlattrRestException, IOException {
