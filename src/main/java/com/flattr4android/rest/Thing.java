@@ -51,6 +51,7 @@ public class Thing implements ThingOverview {
 	public static final int INT_STATUS_CLICKED = 5;
 
 	protected String id;
+	protected int intId;
 	protected Date created;
 	protected String language;
 	protected String url;
@@ -80,6 +81,10 @@ public class Thing implements ThingOverview {
 
 	public String getId() {
 		return id;
+	}
+
+	public int getIntId() {
+		return intId;
 	}
 
 	public Date getCreationDate() {
@@ -349,6 +354,8 @@ class ThingSAXHandler extends PortableSAXHandler {
 					currentThing.tags.add(value);
 				} else if (tagName.equals("id")) {
 					currentThing.id = value;
+				} else if (tagName.equals("int_id")) {
+					currentThing.intId = Integer.parseInt(value);
 				} else if (tagName.equals("created")) {
 					// Convert seconds (UNIX/Flattr format) to milliseconds
 					// (Java Date's API)

@@ -147,7 +147,16 @@ public class FlattrRestClient {
 	}
 
 	/**
-	 * Return a thing by its ID.
+	 * Return a thing by its numeric ID.
+	 */
+	public Thing getThingById(int id) throws OAuthMessageSignerException,
+			OAuthExpectationFailedException, OAuthCommunicationException,
+			FlattrRestException, IOException {
+		return getThingById(Integer.toString(id));
+	}
+
+	/**
+	 * Return a thing by its numeric or MD5 ID.
 	 */
 	public Thing getThingById(String id) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
@@ -224,11 +233,21 @@ public class FlattrRestClient {
 	/**
 	 * Browse things.
 	 * 
-	 * @param searchedText Text to be present in the thing's title, or <code>null</code> if nothing is expected.
-	 * @param tags Searched tags, or <code>null</code> or empty list if nothing is expected.
-	 * @param categories Searched categories, or <code>null</code> or empty list if nothing is expected.
-	 * @param languages Searched languages, or <code>null</code> or empty list if nothing is expected.
-	 * @param users Searched users, or <code>null</code> or empty list if nothing is expected.
+	 * @param searchedText
+	 *            Text to be present in the thing's title, or <code>null</code>
+	 *            if nothing is expected.
+	 * @param tags
+	 *            Searched tags, or <code>null</code> or empty list if nothing
+	 *            is expected.
+	 * @param categories
+	 *            Searched categories, or <code>null</code> or empty list if
+	 *            nothing is expected.
+	 * @param languages
+	 *            Searched languages, or <code>null</code> or empty list if
+	 *            nothing is expected.
+	 * @param users
+	 *            Searched users, or <code>null</code> or empty list if nothing
+	 *            is expected.
 	 * 
 	 * @see FlattrRestClient#getCategories()
 	 * @see FlattrRestClient#getLanguages()
@@ -258,7 +277,8 @@ public class FlattrRestClient {
 		return uri;
 	}
 
-	private static String getParameterString(String paramName, List<String> params) {
+	private static String getParameterString(String paramName,
+			List<String> params) {
 		if ((params == null) || (params.size() <= 0)) {
 			return "";
 		}

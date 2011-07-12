@@ -35,6 +35,7 @@ public class SampleThing extends Thing {
 		// 12/10/2010
 		created = new Date(1281617100L);
 		id = "7e4c65bfab8ee31e7d79f4d3b7bcfe19";
+		intId = 47413;
 		language = "en_US";
 		status = "ok";
 		tags = new ArrayList<String>();
@@ -57,6 +58,7 @@ public class SampleThing extends Thing {
 		// 12/10/2010
 		created = model.getCreationDate();
 		id = model.getId();
+		intId = model.getIntId();
 		language = model.getLanguage();
 		status = model.getStatus();
 		tags = new ArrayList<String>();
@@ -72,6 +74,10 @@ public class SampleThing extends Thing {
 		this.id = id;
 	}
 	
+	public void setIntId(int intId) {
+		this.intId = intId;
+	}
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}

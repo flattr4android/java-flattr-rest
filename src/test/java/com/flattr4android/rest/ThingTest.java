@@ -110,6 +110,11 @@ public class ThingTest extends FlattrRestTestCase {
 
 		// Bad format
 		assertEquals(null, Thing.extractThingIDFromQRCode("This is not a URL"));
+		
+		// Int Id, short format
+		assertEquals(
+				"123456",
+				Thing.extractThingIDFromQRCode("https://flattr.com/t/123456"));
 	}
 
 }
