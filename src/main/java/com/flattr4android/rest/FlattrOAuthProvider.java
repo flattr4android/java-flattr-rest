@@ -19,8 +19,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.message.BasicHttpRequest;
+
 import oauth.signpost.basic.HttpURLConnectionRequestAdapter;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+import oauth.signpost.commonshttp.HttpRequestAdapter;
 import oauth.signpost.http.HttpRequest;
 
 @SuppressWarnings("serial")
@@ -41,18 +46,7 @@ public class FlattrOAuthProvider extends CommonsHttpOAuthProvider {
 	@Override
 	protected HttpRequest createRequest(String endpointUrl)
 			throws MalformedURLException, IOException {
-		HttpURLConnection connection = (HttpURLConnection) new URL(endpointUrl)
-				.openConnection();
-
-		// On Android, there is an issue with HTTP headers.
-		// See for example
-		// http://mail-archives.apache.org/mod_mbox/harmony-commits/201002.mbox/%3C1938314103.387611266583707925.JavaMail.jira@brutus.apache.org%3E
-		// That causes another issue with the Content-Length header,
-		// which is not sent while mandatory in a POST request with Flattr.
-		// Thus a GET is used instead, so Content-Length is not set anymore.
-		connection.setRequestMethod("GET");
-
-		connection.setAllowUserInteraction(false);
-		return new HttpURLConnectionRequestAdapter(connection);
+		HttpUriRequest request = new HttpGet(endpointUrl);
+		return new HttpRequestAdapter(request);
 	}
 }
