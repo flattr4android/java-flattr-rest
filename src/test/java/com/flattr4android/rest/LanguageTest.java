@@ -16,10 +16,6 @@ package com.flattr4android.rest;
 
 import java.util.ArrayList;
 
-import com.flattr4android.rest.FlattrRestException;
-import com.flattr4android.rest.Language;
-
-
 public class LanguageTest extends FlattrRestTestCase {
 
 	public void testBuildLanguages() throws FlattrRestException {

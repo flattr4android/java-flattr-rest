@@ -17,9 +17,9 @@ package com.flattr4android.rest;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class PortableSAXHandler extends DefaultHandler {
-	
+
 	protected String getTagName(String localName, String qName) {
-		if ((qName != null ) && (qName.length() > 0)) {
+		if ((qName != null) && (qName.length() > 0)) {
 			return qName;
 		}
 		return localName;

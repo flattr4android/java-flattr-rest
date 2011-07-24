@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SubscriptionTest extends FlattrRestTestCase {
-	
+
 	public void testBuildOneSubscription() throws FlattrRestException {
 		Subscription s = Subscription.buildOneSubscription(null, getClass()
 				.getClassLoader().getResourceAsStream("one_subscription.xml"));
@@ -30,13 +30,15 @@ public class SubscriptionTest extends FlattrRestTestCase {
 		assertEquals("My little pony fan club", s.getThingTitle());
 		assertEquals("http://mylittleponyfanclub.com", s.getThingURL());
 	}
-	
+
 	public void testBuildSubscriptions() throws FlattrRestException {
-		ArrayList<Subscription> list = Subscription.buildSubscriptions(null, getClass()
-				.getClassLoader().getResourceAsStream("two_subscriptions.xml"));
-		
+		ArrayList<Subscription> list = Subscription.buildSubscriptions(
+				null,
+				getClass().getClassLoader().getResourceAsStream(
+						"two_subscriptions.xml"));
+
 		assertEquals(2, list.size());
-		
+
 		Subscription s = list.get(0);
 		assertEquals(12345, s.getId());
 		assertEquals(6, s.getMonths());
@@ -45,7 +47,7 @@ public class SubscriptionTest extends FlattrRestTestCase {
 		assertEquals("0282de399c3892aa19165e1a0baaccdc", s.getThingId());
 		assertEquals("My little pony fan club", s.getThingTitle());
 		assertEquals("http://mylittleponyfanclub.com", s.getThingURL());
-		
+
 		s = list.get(1);
 		assertEquals(54321, s.getId());
 		assertEquals(7, s.getMonths());

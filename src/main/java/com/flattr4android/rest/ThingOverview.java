@@ -17,7 +17,9 @@ package com.flattr4android.rest;
 public interface ThingOverview {
 
 	public String getThingId();
+
 	public String getThingTitle();
+
 	public String getThingURL();
-	
+
 }

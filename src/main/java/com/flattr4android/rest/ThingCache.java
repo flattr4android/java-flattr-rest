@@ -54,7 +54,7 @@ public class ThingCache {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returned a cached thing.
 	 * 
@@ -64,7 +64,7 @@ public class ThingCache {
 	public Thing getThingById(String id) {
 		return getThingById(id, getDefaultMaxAge());
 	}
-	
+
 	/**
 	 * Return a cached thing.
 	 * 
@@ -89,7 +89,7 @@ public class ThingCache {
 		}
 		return entry.thing;
 	}
-	
+
 	/**
 	 * When the cache is not enabled, it does not keep trace of things.
 	 * 
@@ -99,11 +99,11 @@ public class ThingCache {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	public void setEnabled(boolean enabled) {
-		this.enabled= enabled;
+		this.enabled = enabled;
 	}
-	
+
 	/**
 	 * Return the age used when none is specified.
 	 * 
@@ -112,7 +112,7 @@ public class ThingCache {
 	public int getDefaultMaxAge() {
 		return defaultMaxAge;
 	}
-	
+
 	public void setDefaultMaxAge(int defaultMaxAge) {
 		this.defaultMaxAge = defaultMaxAge;
 	}

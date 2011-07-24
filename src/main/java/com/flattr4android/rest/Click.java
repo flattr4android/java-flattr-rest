@@ -64,7 +64,7 @@ public class Click implements ThingOverview {
 	public String getThingURL() {
 		return thingUrl;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getThingTitle() + " - clicked on " + getDate();

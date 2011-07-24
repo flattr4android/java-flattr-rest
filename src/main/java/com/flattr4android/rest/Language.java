@@ -88,7 +88,7 @@ class LanguageSAXHandler extends PortableSAXHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		String tagName = getTagName(localName, qName);
-		
+
 		String value = currentValue.toString().trim();
 
 		if ((tagName.equals("language")) && (currentLanguage != null)) {

@@ -16,10 +16,6 @@ package com.flattr4android.rest;
 
 import java.util.ArrayList;
 
-import com.flattr4android.rest.Category;
-import com.flattr4android.rest.FlattrRestException;
-
-
 public class CategoryTest extends FlattrRestTestCase {
 
 	public void testBuildCategories() throws FlattrRestException {

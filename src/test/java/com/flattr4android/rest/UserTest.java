@@ -14,8 +14,6 @@
  */
 package com.flattr4android.rest;
 
-import com.flattr4android.rest.FlattrRestException;
-import com.flattr4android.rest.User;
 
 public class UserTest extends FlattrRestTestCase {
 

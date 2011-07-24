@@ -20,7 +20,7 @@ public class FlattrRestException extends Exception {
 	public FlattrRestException(String msg) {
 		super(msg);
 	}
-	
+
 	public FlattrRestException(Throwable t) {
 		super(t);
 	}

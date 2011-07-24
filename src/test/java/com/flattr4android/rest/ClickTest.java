@@ -25,21 +25,22 @@ public class ClickTest extends FlattrRestTestCase {
 
 		Click c = clicks.get(0);
 		assertEquals(12345, c.getId());
-		assertEquals(new Date(1291133253*1000L), c.getDate());
+		assertEquals(new Date(1291133253 * 1000L), c.getDate());
 		assertEquals("0282de399c3892aa19165e1a0baaccdc", c.getThingId());
 		assertEquals("Free Brokep", c.getThingTitle());
-		assertEquals("http://blog.flattr.net/2010/11/free-brokep/", c.getThingURL());
+		assertEquals("http://blog.flattr.net/2010/11/free-brokep/",
+				c.getThingURL());
 
 		c = clicks.get(1);
 		assertEquals(12346, c.getId());
-		assertEquals(new Date(1291133271*1000L), c.getDate());
+		assertEquals(new Date(1291133271 * 1000L), c.getDate());
 		assertEquals("1e3337f323197c97814dc807eff39aa5", c.getThingId());
 		assertEquals("Rotate PDF for free", c.getThingTitle());
 		assertEquals("http://www.rotatepdf.net", c.getThingURL());
 
 		c = clicks.get(2);
 		assertEquals(12349, c.getId());
-		assertEquals(new Date(1290135221*1000L), c.getDate());
+		assertEquals(new Date(1290135221 * 1000L), c.getDate());
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", c.getThingId());
 		assertEquals("Kontakta Kontilint", c.getThingTitle());
 		assertEquals("http://www.kontilint.se/kontakt", c.getThingURL());

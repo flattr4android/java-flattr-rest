@@ -17,17 +17,13 @@ package com.flattr4android.rest;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.flattr4android.rest.FlattrRestException;
-import com.flattr4android.rest.Thing;
-
-
 public class ThingTest extends FlattrRestTestCase {
 
 	public void testBuildOneThing() throws FlattrRestException {
 		Thing t = Thing.buildOneThing(null, getClass().getClassLoader()
 				.getResourceAsStream("one_thing.xml"));
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
-		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
+		assertEquals(new Date(1276784931 * 1000L), t.getCreationDate());
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
@@ -51,7 +47,7 @@ public class ThingTest extends FlattrRestTestCase {
 
 		Thing t = things.get(0);
 		assertEquals("bf12b55dc73d89835fff9696b6cc3883", t.getId());
-		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
+		assertEquals(new Date(1276784931 * 1000L), t.getCreationDate());
 		assertEquals("sv_SE", t.getLanguage());
 		assertEquals("http://www.kontilint.se/kontakt", t.getURL());
 		assertEquals("Kontakta Kontilint", t.getTitle());
@@ -70,7 +66,7 @@ public class ThingTest extends FlattrRestTestCase {
 
 		t = things.get(1);
 		assertEquals("1e3337f323197c97814dc807eff39aa5", t.getId());
-		assertEquals(new Date(1276784931*1000L), t.getCreationDate());
+		assertEquals(new Date(1276784931 * 1000L), t.getCreationDate());
 		assertEquals("us_EN", t.getLanguage());
 		assertEquals("http://www.rotatepdf.net", t.getURL());
 		assertEquals("Rotate PDF for free", t.getTitle());
@@ -110,10 +106,9 @@ public class ThingTest extends FlattrRestTestCase {
 
 		// Bad format
 		assertEquals(null, Thing.extractThingIDFromQRCode("This is not a URL"));
-		
+
 		// Int Id, short format
-		assertEquals(
-				"123456",
+		assertEquals("123456",
 				Thing.extractThingIDFromQRCode("https://flattr.com/t/123456"));
 	}
 

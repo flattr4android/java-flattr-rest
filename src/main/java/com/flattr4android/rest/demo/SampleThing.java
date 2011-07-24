@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.flattr4android.rest.Thing;
 
-
 public class SampleThing extends Thing {
 
 	public SampleThing() {
@@ -69,11 +68,11 @@ public class SampleThing extends Thing {
 		userId = model.getUserId();
 		userName = model.getUserName();
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public void setIntId(int intId) {
 		this.intId = intId;
 	}
@@ -81,27 +80,27 @@ public class SampleThing extends Thing {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public void setCreationDate(Date created) {
 		this.created = created;
 	}
-	
+
 	public void setClicks(int clicks) {
 		this.clicks = clicks;
 	}
-	
+
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
-	
+
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
