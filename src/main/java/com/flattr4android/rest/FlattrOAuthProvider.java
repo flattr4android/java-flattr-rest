@@ -19,12 +19,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.basic.HttpURLConnectionRequestAdapter;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import oauth.signpost.http.HttpRequest;
 
 @SuppressWarnings("serial")
-public class FlattrOAuthProvider extends DefaultOAuthProvider {
+public class FlattrOAuthProvider extends CommonsHttpOAuthProvider {
 
 	public static final String REQUEST_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/request_token";
 	public static final String ACCESS_TOKEN_ENDPOINT_URL = "http://api.flattr.com/oauth/access_token";

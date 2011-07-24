@@ -14,10 +14,10 @@
  */
 package com.flattr4android.rest;
 
-import oauth.signpost.basic.DefaultOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 @SuppressWarnings("serial")
-public class FlattrOAuthConsumer extends DefaultOAuthConsumer {
+public class FlattrOAuthConsumer extends CommonsHttpOAuthConsumer {
 
 	public FlattrOAuthConsumer(String consumerKey, String consumerSecret) {
 		super(consumerKey, consumerSecret);

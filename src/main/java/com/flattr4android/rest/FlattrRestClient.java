@@ -16,9 +16,7 @@ package com.flattr4android.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,11 +25,17 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import oauth.signpost.OAuthConsumer;
-import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.xml.sax.SAXException;
 
 import com.flattr4android.rest.demo.SampleThing;
@@ -49,6 +53,7 @@ public class FlattrRestClient {
 	private boolean demoMode = false;
 	private Thing demoSampleThing;
 	private ThingCache thingCache = new ThingCache();
+	private DefaultHttpClient client;
 
 	public FlattrRestClient(OAuthConsumer consumer) {
 		this.consumer = consumer;
@@ -56,7 +61,7 @@ public class FlattrRestClient {
 
 	public FlattrRestClient(String consumerKey, String consumerSecret,
 			String accessToken, String tokenSecret) {
-		consumer = new DefaultOAuthConsumer(consumerKey, consumerSecret);
+		consumer = new FlattrOAuthConsumer(consumerKey, consumerSecret);
 		consumer.setTokenWithSecret(accessToken, tokenSecret);
 	}
 
@@ -437,55 +442,55 @@ public class FlattrRestClient {
 				+ "feed/categories"));
 	}
 
-	protected HttpURLConnection sendRequest(String uri)
+	protected HttpResponse sendRequest(String uri)
 			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException, IOException {
 		return sendRequest(uri, "GET", null);
 	}
 
-	protected HttpURLConnection sendRequest(String uri, String method,
-			String content) throws OAuthMessageSignerException,
+	protected HttpResponse sendRequest(String uri, String method, String content)
+			throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			IOException, FlattrServerResponseException {
-		URL url = new URL("http://api.flattr.com" + uri);
-		HttpURLConnection request = (HttpURLConnection) url.openConnection();
-		consumer.sign(request);
-		request.setRequestMethod(method);
-		if (content != null) {
-			request.setDoOutput(true);
-			PrintWriter pw = new PrintWriter(request.getOutputStream());
-			pw.write(content);
-		}
-		request.connect();
-		int reqCode;
-		try {
-			reqCode = request.getResponseCode();
-		} catch (IOException e) {
-			// See
-			// http://stackoverflow.com/questions/1357372/ioexception-received-authentication-challenge-is-null-apache-harmony-android
-			if (e.getMessage().equals(
-					"Received authentication challenge is null")) {
-				throw new AuthenticationException(request);
-			} else {
-				throw e;
+		HttpRequestBase req;
+		if (method.equals("GET")) {
+			req = new HttpGet("http://api.flattr.com" + uri);
+		} else {
+			req = new HttpPost("http://api.flattr.com" + uri);
+			if (content != null) {
+				StringEntity body = new StringEntity("data="
+						+ URLEncoder.encode(content, "utf-8"));
+				body.setContentType("application/x-www-form-urlencoded");
+				((HttpPost) req).setEntity(body);
 			}
 		}
+		consumer.sign(req);
+		HttpResponse resp = getHttpClient().execute(req);
+		int reqCode;
+		reqCode = resp.getStatusLine().getStatusCode();
 		if (reqCode != 200) {
 			if (reqCode == 401) {
-				throw new AuthenticationException(request);
+				throw new AuthenticationException(resp);
 			} else {
-				throw new FlattrServerResponseException(request);
+				throw new FlattrServerResponseException(resp);
 			}
 		}
-		return request;
+		return resp;
 	}
 
 	protected InputStream getResourceInputStream(String uri)
 			throws IOException, OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
 			FlattrServerResponseException {
-		return (InputStream) sendRequest(uri).getContent();
+		return (InputStream) sendRequest(uri).getEntity().getContent();
+	}
+
+	private HttpClient getHttpClient() {
+		if (client == null) {
+			client = new DefaultHttpClient();
+		}
+		return client;
 	}
 
 }

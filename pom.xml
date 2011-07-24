@@ -3,7 +3,7 @@
   <groupId>com.flattr4android.rest</groupId>
   <artifactId>java-flattr-rest</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.2.4</version>
+  <version>0.0.3.0</version>
   <name>java-flattr-rest</name>
   <description>
     Java library for the Flattr Rest API.
@@ -56,9 +56,27 @@
       <version>1.2.1.1</version>
     </dependency>
     <dependency>
+      <groupId>oauth.signpost</groupId>
+      <artifactId>signpost-commonshttp4</artifactId>
+      <version>1.2.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.0.1</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

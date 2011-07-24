@@ -15,7 +15,8 @@
 package com.flattr4android.rest;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+
+import org.apache.http.HttpResponse;
 
 @SuppressWarnings("serial")
 public class FlattrServerResponseException extends FlattrRestException {
@@ -27,9 +28,10 @@ public class FlattrServerResponseException extends FlattrRestException {
 		super("Server response: " + status + " (" + msg + ")");
 	}
 
-	public FlattrServerResponseException(HttpURLConnection connection)
+	public FlattrServerResponseException(HttpResponse response)
 			throws IOException {
-		this(connection.getResponseCode(), connection.getResponseMessage());
+		this(response.getStatusLine().getStatusCode(), response.getStatusLine()
+				.getReasonPhrase());
 	}
 
 	public int getStatus() {

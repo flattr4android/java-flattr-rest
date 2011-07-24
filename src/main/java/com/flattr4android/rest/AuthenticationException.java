@@ -15,7 +15,8 @@
 package com.flattr4android.rest;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+
+import org.apache.http.HttpResponse;
 
 @SuppressWarnings("serial")
 public class AuthenticationException extends FlattrServerResponseException {
@@ -24,9 +25,8 @@ public class AuthenticationException extends FlattrServerResponseException {
 		super(status, msg);
 	}
 
-	public AuthenticationException(HttpURLConnection connection)
-			throws IOException {
-		super(connection);
+	public AuthenticationException(HttpResponse response) throws IOException {
+		super(response);
 	}
 
 }
