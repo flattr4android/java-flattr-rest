@@ -29,13 +29,17 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.xml.sax.SAXException;
 
 import com.flattr4android.rest.demo.SampleThing;
@@ -403,21 +407,24 @@ public class FlattrRestClient {
 	/**
 	 * Register a new thing.
 	 */
-	public void register(Thing thing) throws OAuthMessageSignerException,
+	public Thing register(Thing thing) throws OAuthMessageSignerException,
 			OAuthExpectationFailedException, OAuthCommunicationException,
-			FlattrServerResponseException, IOException {
+			IOException, IllegalStateException, FlattrRestException {
 		String content = "<thing>" + "<url>" + thing.getURL() + "</url>"
 				+ "<title><![CDATA[" + thing.getTitle() + "]]></title>"
 				+ "<category>" + thing.getCategoryName() + "</category>"
 				+ "<description><![CDATA[" + thing.getDescription()
 				+ "]]></description>" + "<language>" + thing.getLanguage()
-				+ "</language>" + "<hidden>1</hidden>" + "<tags>";
+				+ "</language>" + "<hidden>0</hidden>" + "<tags>";
 		for (String tag : thing.getTags()) {
 			content += "<tag>" + tag + "</tag>";
 		}
 		content += "</tags>" + "</thing>";
 
-		sendRequest(API_PATH_PREFIX + "thing/register", "POST", content);
+		HttpResponse response = sendRequest(API_PATH_PREFIX + "thing/register",
+				"POST", content);
+		return Thing.buildOneThing(this, (InputStream) response.getEntity()
+				.getContent());
 	}
 
 	/**
