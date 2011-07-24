@@ -111,7 +111,7 @@ public class FlattrRestExample {
 			t.setLanguage("en_US");
 			t.setCategoryName("rest");
 			t.setURL("http://some_url.net");
-			fr.register(t);
+			System.out.println("Registered thing: " + fr.register(t));
 
 			System.out.println("Languages:");
 			ArrayList<Language> langs = fr.getLanguages();
